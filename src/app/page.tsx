@@ -2,8 +2,7 @@ import { Sidebar } from "@/components/layout/sidebar";
 import { Header } from "@/components/layout/header";
 import { KPICards } from "@/components/dashboard/kpi-cards";
 import { ProjectTable } from "@/components/dashboard/project-table";
-import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { NewProjectDialog } from "@/components/dashboard/new-project-dialog";
 
 export default function DashboardPage() {
   return (
@@ -22,10 +21,7 @@ export default function DashboardPage() {
                   מעקב בזמן אמת אחר תקציבים, לוחות זמנים והתקדמות בכל הפרויקטים הפעילים.
                 </p>
               </div>
-              <Button className="rounded-xl flex items-center gap-2">
-                <Plus className="w-4 h-4" />
-                פרויקט חדש
-              </Button>
+              <NewProjectDialog />
             </div>
 
             <KPICards />
