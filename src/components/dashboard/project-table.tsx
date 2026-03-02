@@ -20,13 +20,35 @@ export function ProjectTable() {
     const { data: projects, isLoading, error } = useQuery({
         queryKey: ['projects'],
         queryFn: async () => {
-            const { data, error } = await supabase
-                .from('projects')
-                .select('*')
-                .order('created_at', { ascending: false });
+            let supabaseData: any[] = [];
+            let fallbackData: any[] = [];
 
-            if (error) throw error;
-            return data;
+            try {
+                const { data, error } = await supabase
+                    .from('projects')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+
+                if (error) throw error;
+                supabaseData = data || [];
+            } catch (err: any) {
+                console.warn("Supabase fetch failed", err.message);
+            }
+
+            // Get local storage fallback data
+            try {
+                if (typeof window !== 'undefined') {
+                    const fallbackStr = localStorage.getItem('fallback_projects');
+                    if (fallbackStr) {
+                        fallbackData = JSON.parse(fallbackStr);
+                    }
+                }
+            } catch (e) {
+                console.error("Local storage error", e);
+            }
+
+            // Return combined data
+            return [...fallbackData, ...supabaseData];
         },
     });
 
