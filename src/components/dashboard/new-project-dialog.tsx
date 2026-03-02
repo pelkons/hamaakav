@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { Plus } from "lucide-react";
+import { Plus, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { supabase } from "@/lib/supabase";
 import {
     Dialog,
     DialogContent,
@@ -16,13 +17,40 @@ import {
 
 export function NewProjectDialog() {
     const [open, setOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // In a real app, you would handle form submission here
-        const formData = new FormData(e.target as HTMLFormElement);
-        console.log(Object.fromEntries(formData.entries()));
-        setOpen(false);
+        setIsLoading(true);
+
+        try {
+            const formData = new FormData(e.target as HTMLFormElement);
+            const data = Object.fromEntries(formData.entries());
+
+            const { error } = await supabase.from('projects').insert([
+                {
+                    name: data.name,
+                    units: parseInt(data.units as string, 10),
+                    block: data.block,
+                    parcel: data.parcel,
+                    lot: data.lot,
+                    status: 'פעיל', // default status
+                    progress: 0,
+                    budget_utilized: 0
+                }
+            ]);
+
+            if (error) {
+                console.error('Error inserting project:', error);
+                alert('שגיאה ביצירת פרויקט. אנא נסה שנית.');
+            } else {
+                setOpen(false);
+                // Hard refresh the page to show the new data (or trigger a refetch if using a global state)
+                window.location.reload();
+            }
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
@@ -74,10 +102,13 @@ export function NewProjectDialog() {
                         </div>
                     </div>
                     <DialogFooter className="pt-4">
-                        <Button type="button" variant="outline" onClick={() => setOpen(false)}>
+                        <Button type="button" variant="outline" onClick={() => setOpen(false)} disabled={isLoading}>
                             ביטול
                         </Button>
-                        <Button type="submit">שמירה</Button>
+                        <Button type="submit" disabled={isLoading}>
+                            {isLoading ? <Loader2 className="w-4 h-4 ml-2 animate-spin" /> : null}
+                            שמירה
+                        </Button>
                     </DialogFooter>
                 </form>
             </DialogContent>
