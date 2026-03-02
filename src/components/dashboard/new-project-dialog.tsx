@@ -41,8 +41,8 @@ export function NewProjectDialog() {
             ]);
 
             if (error) {
-                console.error('Error inserting project:', error);
-                alert('שגיאה ביצירת פרויקט. אנא נסה שנית.');
+                console.error('Error inserting project:', error.message || error);
+                alert(`שגיאה ביצירת פרויקט: ${error.message || 'שגיאת רשת 또는 הרשאות'}`);
             } else {
                 setOpen(false);
                 // Hard refresh the page to show the new data (or trigger a refetch if using a global state)
