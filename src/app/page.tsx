@@ -2,6 +2,8 @@ import { Sidebar } from "@/components/layout/sidebar";
 import { Header } from "@/components/layout/header";
 import { KPICards } from "@/components/dashboard/kpi-cards";
 import { ProjectTable } from "@/components/dashboard/project-table";
+import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
 
 export default function DashboardPage() {
   return (
@@ -11,13 +13,19 @@ export default function DashboardPage() {
         <Header />
         <main className="flex-1 overflow-y-auto p-8">
           <div className="max-w-7xl mx-auto space-y-8">
-            <div>
-              <h1 className="text-3xl font-bold tracking-tight text-foreground">
-                סקירת פרויקטים
-              </h1>
-              <p className="text-muted-foreground mt-2">
-                מעקב בזמן אמת אחר תקציבים, לוחות זמנים והתקדמות בכל הפרויקטים הפעילים.
-              </p>
+            <div className="flex items-center justify-between">
+              <div>
+                <h1 className="text-3xl font-bold tracking-tight text-foreground">
+                  סקירת פרויקטים
+                </h1>
+                <p className="text-muted-foreground mt-2">
+                  מעקב בזמן אמת אחר תקציבים, לוחות זמנים והתקדמות בכל הפרויקטים הפעילים.
+                </p>
+              </div>
+              <Button className="rounded-xl flex items-center gap-2">
+                <Plus className="w-4 h-4" />
+                פרויקט חדש
+              </Button>
             </div>
 
             <KPICards />
