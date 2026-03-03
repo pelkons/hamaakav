@@ -82,7 +82,7 @@ export function ProjectTable() {
                         <TableHeader>
                             <TableRow className="border-border">
                                 <TableHead className="w-[250px] text-right">שם הפרויקט</TableHead>
-                                <TableHead className="text-right">מנהל פרויקט</TableHead>
+                                <TableHead className="text-right">סטטוס אחרון</TableHead>
                                 <TableHead className="text-right">סטטוס</TableHead>
                                 <TableHead className="text-right">יח&quot;ד</TableHead>
                                 <TableHead className="text-right w-[200px]">התקדמות</TableHead>
