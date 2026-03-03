@@ -3,8 +3,16 @@ import { Header } from "@/components/layout/header";
 import { KPICards } from "@/components/dashboard/kpi-cards";
 import { ProjectTable } from "@/components/dashboard/project-table";
 import { NewProjectDialog } from "@/components/dashboard/new-project-dialog";
+import { createClient } from "@/utils/supabase/server";
+import { redirect } from "next/navigation";
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  const supabase = await createClient();
+  const { data: { session } } = await supabase.auth.getSession();
+
+  if (!session) {
+    redirect("/");
+  }
   return (
     <div className="flex h-screen overflow-hidden bg-background">
       <Sidebar />
