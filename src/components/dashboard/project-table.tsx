@@ -15,8 +15,10 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Progress } from "@/components/ui/progress";
+import { useRouter } from "next/navigation";
 
 export function ProjectTable() {
+    const router = useRouter();
     const { data: projects, isLoading, error } = useQuery({
         queryKey: ['projects'],
         queryFn: async () => {
@@ -90,7 +92,11 @@ export function ProjectTable() {
                         </TableHeader>
                         <TableBody>
                             {projects.map((project) => (
-                                <TableRow key={project.id} className="border-border/50 hover:bg-muted/50 transition-colors">
+                                <TableRow
+                                    key={project.id}
+                                    className="border-border/50 hover:bg-muted/50 transition-colors cursor-pointer"
+                                    onClick={() => router.push(`/dashboard/projects/${project.id}`)}
+                                >
                                     <TableCell className="font-medium">{project.name}</TableCell>
                                     <TableCell>
                                         <div className="flex items-center gap-2">
