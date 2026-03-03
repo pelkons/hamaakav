@@ -11,6 +11,7 @@ export function Header() {
 
     return (
         <header className="h-20 bg-card border-b border-border shadow-sm flex items-center justify-between px-8 sticky top-0 z-10 rounded-b-xl">
+            {/* User Profile and Actions (RTL: First element = Right side) */}
             <div className="flex items-center gap-4">
                 <div className="flex items-center gap-3 border-e border-border pe-4 me-2">
                     <Avatar className="h-10 w-10 border-2 border-primary/10">
@@ -23,26 +24,29 @@ export function Header() {
                     </div>
                 </div>
 
-                <Button variant="ghost" size="icon" className="rounded-full relative">
-                    <Bell className="h-5 w-5" />
-                    <span className="absolute top-1 end-1 h-2 w-2 rounded-full bg-destructive" />
-                    <span className="sr-only">התראות</span>
-                </Button>
+                <div className="flex items-center gap-2">
+                    <Button variant="ghost" size="icon" className="rounded-full relative">
+                        <Bell className="h-5 w-5" />
+                        <span className="absolute top-1 end-1 h-2 w-2 rounded-full bg-destructive" />
+                        <span className="sr-only">התראות</span>
+                    </Button>
 
-                <Button
-                    variant="ghost"
-                    size="icon"
-                    className="rounded-full"
-                    onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                >
-                    <Sun className="h-5 w-5 dark:hidden" />
-                    <Moon className="h-5 w-5 hidden dark:block" />
-                    <span className="sr-only">החלף נושא</span>
-                </Button>
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        className="rounded-full"
+                        onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                    >
+                        <Sun className="h-5 w-5 dark:hidden" />
+                        <Moon className="h-5 w-5 hidden dark:block" />
+                        <span className="sr-only">החלף נושא</span>
+                    </Button>
+                </div>
             </div>
 
+            {/* Search (RTL: Second element = Left side) */}
             <div className="flex-1 flex max-w-xl justify-end">
-                <div className="relative w-full">
+                <div className="relative w-full max-w-md">
                     <Search className="absolute start-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                     <Input
                         placeholder="חיפוש חופשי..."
